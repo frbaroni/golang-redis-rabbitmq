@@ -17,8 +17,21 @@ services:
   recepcionist:
     build: .
     restart: unless-stopped
-    command: go run ./src/recepcionist/main.go
+    command: go run ./src/main.go --recepcionist
+    depends_on:
+    - rabbitmq
+    - redis
     volumes:
     - .:/app:ro
     ports:
     - 8085:8080
+
+  specialist:
+    build: .
+    restart: unless-stopped
+    command: go run ./src/main.go --specialist
+    depends_on:
+    - rabbitmq
+    - redis
+    volumes:
+    - .:/app:ro
